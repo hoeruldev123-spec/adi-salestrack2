@@ -27,6 +27,8 @@ class OpportunityModel extends Model
     ];
     protected $useTimestamps = true;
     protected $createdField = 'created_at';
+    protected $deletedField = 'deleted_at'; // Tambahkan ini
+    protected $useSoftDeletes = true;       // Tambahkan ini
 
 
     /**

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="<?= base_url() ?>">
+        <a class="navbar-brand" href="<?= base_url(isset($current_user) ? $current_user['role'] . '/dashboard' : '/') ?>"> <!-- PERBAIKI DI SINI -->
             <i class="bi bi-graph-up"></i> SalesTrack
         </a>
 
