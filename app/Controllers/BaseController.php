@@ -3,56 +3,68 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class BaseController
- *
- * BaseController provides a convenient place for loading components
- * and performing functions that are needed by all your controllers.
- * Extend this class in any new controllers:
- *     class Home extends BaseController
- *
- * For security be sure to declare any new methods as protected or private.
- */
-abstract class BaseController extends Controller
+class BaseController extends Controller
 {
-    /**
-     * Instance of the main Request object.
-     *
-     * @var CLIRequest|IncomingRequest
-     */
-    protected $request;
+    protected $helpers = ['form', 'url', 'custom_helper'];
 
     /**
-     * An array of helpers to be loaded automatically upon
-     * class instantiation. These helpers will be available
-     * to all other controllers that extend BaseController.
-     *
-     * @var list<string>
+     * Data yang akan di-share ke semua views
      */
-    protected $helpers = [];
+    protected $globalData = [];
 
     /**
-     * Be sure to declare properties for any property fetch you initialized.
-     * The creation of dynamic property is deprecated in PHP 8.2.
+     * Model instances
      */
-    // protected $session;
+    protected $userModel;
+    protected $opportunityModel;
 
-    /**
-     * @return void
-     */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
-        // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
-        // Preload any models, libraries, etc, here.
+        // Initialize models
+        $this->userModel = new \App\Models\UserModel();
+        $this->opportunityModel = new \App\Models\OpportunityModel();
 
-        // E.g.: $this->session = service('session');
+        // Set global data untuk view
+        $this->setGlobalViewData();
+    }
+
+    /**
+     * Set data global untuk semua view
+     */
+    protected function setGlobalViewData()
+    {
+        if (session()->get('isLoggedIn')) {
+            $this->globalData = [
+                'current_user' => [
+                    'id' => session()->get('user_id'),
+                    'name' => session()->get('name'),
+                    'username' => session()->get('username'),
+                    'role' => session()->get('role')
+                ],
+                'page_title' => 'SalesTrack'
+            ];
+        } else {
+            $this->globalData = [
+                'page_title' => 'SalesTrack'
+            ];
+        }
+    }
+
+    /**
+     * Render view dengan layout dan global data
+     */
+    protected function render($view, $data = [])
+    {
+        // Merge global data dengan data spesifik
+        $mergedData = array_merge($this->globalData, $data);
+
+        $mergedData['content'] = view($view, $mergedData);
+        return view('layouts/main', $mergedData);
     }
 }
