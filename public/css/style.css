@@ -1,0 +1,81 @@
+/* Fix untuk dropdown navbar */
+.navbar .dropdown-menu {
+  z-index: 9999 !important;
+  border: 0;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+}
+
+.navbar .dropdown-toggle::after {
+  display: none;
+}
+
+/* Pastikan navbar items sejajar */
+.navbar-nav .nav-item {
+  display: flex;
+  align-items: center;
+}
+
+/* Sidebar toggle styling */
+.sidenav-toggler-inner {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.sidenav-toggler-line {
+  width: 20px;
+  height: 2px;
+  background-color: #67748e;
+  margin: 2px 0;
+  transition: all 0.3s;
+}
+
+/* Fix untuk layout */
+.main-content {
+  min-height: 100vh;
+}
+
+/* Icon shape fix */
+.icon-shape {
+  width: 3rem !important;
+  height: 3rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.icon-shape i {
+  font-size: 1.25rem !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100%;
+  height: 100%;
+}
+
+/* Atau gunakan transform untuk precise centering */
+.icon-shape i.bi {
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: translate(0, 0);
+}
+
+/* Gradient colors tetap sama */
+.bg-gradient-red {
+  background: linear-gradient(87deg, #f5365c 0, #f56036 100%) !important;
+}
+
+.bg-gradient-green {
+  background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
+}
+
+.bg-gradient-orange {
+  background: linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important;
+}
+
+.bg-gradient-info {
+  background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;
+}

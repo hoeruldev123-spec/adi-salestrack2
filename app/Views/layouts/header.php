@@ -1,39 +1,85 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="<?= base_url(isset($current_user) ? $current_user['role'] . '/dashboard' : '/') ?>"> <!-- PERBAIKI DI SINI -->
-            <i class="bi bi-graph-up"></i> SalesTrack
-        </a>
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+    <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                <li class="breadcrumb-item text-sm">
+                    <a class="opacity-5 text-dark" href="javascript:;">Pages</a>
+                </li>
+                <li class="breadcrumb-item text-sm text-dark active" aria-current="page">
+                    <?= $title ?? 'Dashboard' ?>
+                </li>
+            </ol>
+            <h6 class="font-weight-bolder mb-0"><?= $title ?? 'Dashboard' ?></h6>
+        </nav>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                <!-- Search bar bisa ditambahkan di sini -->
+            </div>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav justify-content-end">
                 <?php if (isset($current_user)): ?>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> <?= $current_user['name'] ?>
+                    <li class="nav-item d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+                            <i class="bi bi-person-circle me-sm-1"></i>
+                            <span class="d-sm-inline d-none"><?= $current_user['name'] ?></span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><span class="dropdown-item-text">
-                                    <small class="text-muted">Role: <?= strtoupper($current_user['role']) ?></small>
-                                </span></li>
-                            <li>
-                                <hr class="dropdown-divider">
+                    </li>
+
+                    <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="nav-item px-3 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-body p-0">
+                            <i class="bi bi-bell fixed-plugin-button-nav cursor-pointer"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="userDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots-vertical cursor-pointer"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4"
+                            aria-labelledby="userDropdown">
+                            <li class="mb-2">
+                                <a class="dropdown-item border-radius-md" href="<?= base_url('profile') ?>">
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-2">
+                                            <i class="bi bi-person"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-weight-bold">Profile</span>
+                                        </div>
+                                    </div>
+                                </a>
                             </li>
-                            <li><a class="dropdown-item" href="<?= base_url('profile') ?>">
-                                    <i class="bi bi-person"></i> Profile
-                                </a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('logout') ?>">
-                                    <i class="bi bi-box-arrow-right"></i> Logout
-                                </a></li>
+                            <li>
+                                <a class="dropdown-item border-radius-md" href="<?= base_url('logout') ?>">
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-2">
+                                            <i class="bi bi-box-arrow-right"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-weight-bold">Logout</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 <?php else: ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('login') ?>">
-                            <i class="bi bi-box-arrow-in-right"></i> Login
+                    <li class="nav-item d-flex align-items-center">
+                        <a href="<?= base_url('login') ?>" class="nav-link text-body font-weight-bold px-0">
+                            <i class="bi bi-box-arrow-in-right me-sm-1"></i>
+                            <span class="d-sm-inline d-none">Login</span>
                         </a>
                     </li>
                 <?php endif; ?>

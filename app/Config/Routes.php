@@ -107,3 +107,28 @@ $routes->get('/', function () {
     }
     return redirect()->to('/login');
 });
+
+// Reports Routes
+$routes->group('reports', ['filter' => 'auth'], function ($routes) {
+    // Sales Reports (untuk sales dan manager)
+    $routes->group('sales', function ($routes) {
+        $routes->get('activity', 'Report\SalesReportController::activity');
+        $routes->get('performance', 'Report\SalesReportController::performance');
+        $routes->get('pipeline', 'Report\SalesReportController::pipeline');
+        $routes->post('export', 'Report\SalesReportController::export');
+    });
+
+    // Revenue Reports (untuk manager dan bod)
+    $routes->group('revenue', ['filter' => 'role:manager,bod'], function ($routes) {
+        $routes->get('overview', 'Report\RevenueReportController::overview');
+        $routes->get('forecast', 'Report\RevenueReportController::forecast');
+        $routes->get('comparison', 'Report\RevenueReportController::comparison');
+    });
+
+    // Ranking Reports (untuk manager dan bod)
+    $routes->group('ranking', ['filter' => 'role:manager,bod'], function ($routes) {
+        $routes->get('sales-performance', 'Report\RankingController::salesPerformance');
+        $routes->get('principal-performance', 'Report\RankingController::principalPerformance');
+        $routes->get('account-performance', 'Report\RankingController::accountPerformance');
+    });
+});

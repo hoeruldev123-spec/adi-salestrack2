@@ -1,67 +1,100 @@
 <?php if (isset($current_user)): ?>
-    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-        <div class="position-sticky pt-3">
-            <ul class="nav flex-column">
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark" id="sidenav-main">
+        <div class="sidenav-header">
+            <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+            <a class="navbar-brand m-0" href="<?= base_url($current_user['role'] . '/dashboard') ?>">
+                <span class="ms-1 font-weight-bold text-white">
+                    <i class="bi bi-graph-up me-2"></i>SalesTrack
+                </span>
+            </a>
+        </div>
+        <hr class="horizontal light mt-0 mb-2">
+        <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+            <ul class="navbar-nav">
+                <!-- Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link <?= ($active_menu ?? '') == 'dashboard' ? 'active' : '' ?>"
+                    <a class="nav-link text-white <?= ($active_menu ?? '') == 'dashboard' ? 'active bg-gradient-primary' : '' ?>"
                         href="<?= base_url($current_user['role'] . '/dashboard') ?>">
-                        <i class="bi bi-speedometer2"></i> Dashboard
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-speedometer2 opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Dashboard</span>
                     </a>
                 </li>
 
+                <!-- Opportunities -->
                 <?php if (in_array($current_user['role'], ['sales', 'manager', 'bod'])): ?>
                     <li class="nav-item">
-                        <a class="nav-link <?= ($active_menu ?? '') == 'opportunities' ? 'active' : '' ?>"
+                        <a class="nav-link text-white <?= ($active_menu ?? '') == 'opportunities' ? 'active bg-gradient-primary' : '' ?>"
                             href="<?= base_url('sales/opportunities') ?>">
-                            <i class="bi bi-briefcase"></i> Opportunities
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-briefcase opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Opportunities</span>
                         </a>
                     </li>
                 <?php endif; ?>
 
+                <!-- Reports -->
                 <?php if (in_array($current_user['role'], ['manager', 'bod'])): ?>
                     <li class="nav-item">
-                        <a class="nav-link <?= ($active_menu ?? '') == 'reports' ? 'active' : '' ?>"
+                        <a class="nav-link text-white <?= ($active_menu ?? '') == 'reports' ? 'active bg-gradient-primary' : '' ?>"
                             href="<?= base_url('manager/reports/sales') ?>">
-                            <i class="bi bi-bar-chart"></i> Reports
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-bar-chart opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Reports</span>
                         </a>
                     </li>
                 <?php endif; ?>
 
+                <!-- Master Data -->
                 <?php if (in_array($current_user['role'], ['manager', 'bod'])): ?>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle <?= ($active_menu ?? '') == 'master' ? 'active' : '' ?>"
-                            href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-gear"></i> Master Data
+                    <li class="nav-item mt-3">
+                        <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Master Data</h6>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white <?= ($active_submenu ?? '') == 'accounts' ? 'active bg-gradient-primary' : '' ?>"
+                            href="<?= base_url('master/accounts') ?>">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-building opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Accounts</span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item <?= ($active_submenu ?? '') == 'accounts' ? 'active' : '' ?>"
-                                    href="<?= base_url('master/accounts') ?>">
-                                    <i class="bi bi-building"></i> Accounts
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item <?= ($active_submenu ?? '') == 'principals' ? 'active' : '' ?>"
-                                    href="<?= base_url('master/principals') ?>">
-                                    <i class="bi bi-shield-check"></i> Principals
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item <?= ($active_submenu ?? '') == 'solution-architects' ? 'active' : '' ?>"
-                                    href="<?= base_url('master/solution-architects') ?>">
-                                    <i class="bi bi-person-badge"></i> Solution Architects
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item <?= ($active_submenu ?? '') == 'license-types' ? 'active' : '' ?>"
-                                    href="<?= base_url('master/license-types') ?>">
-                                    <i class="bi bi-key"></i> License Types
-                                </a>
-                            </li>
-                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white <?= ($active_submenu ?? '') == 'principals' ? 'active bg-gradient-primary' : '' ?>"
+                            href="<?= base_url('master/principals') ?>">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-shield-check opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Principals</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white <?= ($active_submenu ?? '') == 'solution-architects' ? 'active bg-gradient-primary' : '' ?>"
+                            href="<?= base_url('master/solution-architects') ?>">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-person-badge opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Solution Architects</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white <?= ($active_submenu ?? '') == 'license-types' ? 'active bg-gradient-primary' : '' ?>"
+                            href="<?= base_url('master/license-types') ?>">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-key opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">License Types</span>
+                        </a>
                     </li>
                 <?php endif; ?>
             </ul>
         </div>
-    </nav>
+    </aside>
 <?php endif; ?>
