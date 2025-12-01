@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <meta name="csrf-token" content="<?= csrf_hash() ?>">
+
     <title><?= $title ?? 'SalesTrack' ?></title>
 
     <!-- Favicon -->
@@ -22,6 +25,7 @@
 
     <!-- Custom CSS -->
     <link href="<?= base_url('css/style.css') ?>" rel="stylesheet">
+
 </head>
 
 <body class="g-sidenav-show bg-gray-100">

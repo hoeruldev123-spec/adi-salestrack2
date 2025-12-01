@@ -87,5 +87,17 @@ class AuthController extends BaseController
             default:
                 return redirect()->to('/sales/dashboard');
         }
+
+        // Saat login, pastikan menyimpan user_id
+        $session = session();
+        $session->set([
+            'isLoggedIn' => true,
+            'user_id' => $user['id'],  // INI PENTING
+            'username' => $user['username'],
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'role' => $user['role'],
+            'is_active' => $user['is_active']
+        ]);
     }
 }

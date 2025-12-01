@@ -14,7 +14,11 @@
                 <!-- Dashboard -->
                 <li class="nav-item">
                     <a class="nav-link text-white <?= ($active_menu ?? '') == 'dashboard' ? 'active bg-gradient-primary' : '' ?>"
-                        href="<?= base_url($current_user['role'] . '/dashboard') ?>">
+                        href="<?=
+                                ($current_user['role'] == 'admin') ?
+                                    base_url('admin/users') :  // Admin ke user management
+                                    base_url($current_user['role'] . '/dashboard')  // Role lain ke dashboard mereka
+                                ?>">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="bi bi-speedometer2 opacity-10"></i>
                         </div>
@@ -22,11 +26,23 @@
                     </a>
                 </li>
 
-                <!-- Opportunities -->
+
+                <!-- Opportunities dengan routing berdasarkan role -->
                 <?php if (in_array($current_user['role'], ['sales', 'manager', 'bod'])): ?>
                     <li class="nav-item">
+                        <?php
+                        // Tentukan URL berdasarkan role
+                        $opportunitiesUrl = '';
+                        if ($current_user['role'] == 'sales') {
+                            $opportunitiesUrl = base_url('sales/opportunities');
+                        } elseif ($current_user['role'] == 'manager') {
+                            $opportunitiesUrl = base_url('manager/opportunities');
+                        } elseif ($current_user['role'] == 'bod') {
+                            $opportunitiesUrl = base_url('bod/opportunities');
+                        }
+                        ?>
                         <a class="nav-link text-white <?= ($active_menu ?? '') == 'opportunities' ? 'active bg-gradient-primary' : '' ?>"
-                            href="<?= base_url('sales/opportunities') ?>">
+                            href="<?= $opportunitiesUrl ?>">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="bi bi-briefcase opacity-10"></i>
                             </div>
@@ -93,7 +109,28 @@
                             <span class="nav-link-text ms-1">License Types</span>
                         </a>
                     </li>
+
+
                 <?php endif; ?>
+
+
+                <!-- Menu User Management -->
+                <?php if (in_array($current_user['role'], ['admin', 'manager',])): ?>
+                    <li class="nav-item mt-3">
+                        <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">User Management</h6>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white <?= ($active_menu ?? '') == 'users' ? 'active bg-gradient-primary' : '' ?>"
+                            href="<?= base_url('admin/users') ?>">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-people opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Manage Users</span>
+                        </a>
+                    </li>
+
+                <?php endif; ?>
+
             </ul>
         </div>
     </aside>

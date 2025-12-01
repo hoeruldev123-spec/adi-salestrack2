@@ -91,6 +91,22 @@ $routes->group('admin', ['filter' => 'role:manager,bod'], function ($routes) {
     $routes->get('users', 'Admin\UserController::index');
     $routes->get('users/create', 'Admin\UserController::create');
     $routes->post('users/store', 'Admin\UserController::store');
+    $routes->get('users/add', 'Admin\UserController::add');
+
+    // Tambahkan route untuk edit dan delete
+    $routes->get('users/edit/(:num)', 'Admin\UserController::edit/$1');
+    $routes->post('users/update/(:num)', 'Admin\UserController::update/$1');
+    $routes->delete('users/delete/(:num)', 'Admin\UserController::delete/$1');
+});
+
+// app/Config/Routes.php
+$routes->get('check-session', function () {
+    $session = session();
+    return $this->response->setJSON([
+        'user_id' => $session->get('user_id'),
+        'role' => $session->get('role'),
+        'name' => $session->get('name')
+    ]);
 });
 
 // Profile Routes (semua role yang login)
